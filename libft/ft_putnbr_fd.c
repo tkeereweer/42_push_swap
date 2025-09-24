@@ -1,26 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/13 17:54:51 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/09/23 21:31:19 by mkeerewe         ###   ########.fr       */
+/*   Created: 2025/08/19 16:42:40 by mkeerewe          #+#    #+#             */
+/*   Updated: 2025/08/20 15:34:48 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include "libft/libft.h"
+void	ft_putnbr_fd(int n, int fd)
+{
+	unsigned int	nb;
+	char			c;
 
-t_list	*ft_lstinit(int argc, char *argv[]);
-void	ft_push(t_list **head_a, t_list **head_b, char stack);
-void	ft_swap(t_list **head_1, t_list **head_2, char stack);
-void	ft_rotate(t_list **head_1, t_list **head_2, char stack);
-void	ft_revrotate(t_list **head_1, t_list **head_2, char stack);
-
-#endif
+	if (n < 0)
+	{
+		nb = -n;
+		ft_putchar_fd('-', fd);
+	}
+	else
+		nb = n;
+	if (nb < 10)
+	{
+		c = nb + '0';
+		ft_putchar_fd(c, fd);
+	}
+	else
+	{
+		ft_putnbr_fd(nb / 10, fd);
+		ft_putnbr_fd(nb % 10, fd);
+	}
+}

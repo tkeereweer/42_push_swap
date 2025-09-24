@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/13 17:54:51 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/09/23 21:31:19 by mkeerewe         ###   ########.fr       */
+/*   Created: 2025/08/31 22:15:11 by mkeerewe          #+#    #+#             */
+/*   Updated: 2025/09/23 13:29:01 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
+# include <stdarg.h>
 # include <unistd.h>
-# include <stdlib.h>
-# include "libft/libft.h"
+# include "libft.h"
 
-t_list	*ft_lstinit(int argc, char *argv[]);
-void	ft_push(t_list **head_a, t_list **head_b, char stack);
-void	ft_swap(t_list **head_1, t_list **head_2, char stack);
-void	ft_rotate(t_list **head_1, t_list **head_2, char stack);
-void	ft_revrotate(t_list **head_1, t_list **head_2, char stack);
+typedef struct s_format
+{
+	int	ht;
+	int	space;
+	int	plus;
+}	t_format;
+
+int		ft_putchar(char c);
+int		ft_putnbr(int n, t_format *format);
+int		ft_putuint(unsigned int n, int ret);
+int		ft_putstr(char *s);
+int		ft_puthex(unsigned int n, int cap, t_format *format);
+int		ft_putptr(void *ptr);
+int		ft_printf(const char *str, ...);
 
 #endif

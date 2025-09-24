@@ -1,26 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/13 17:54:51 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/09/23 21:31:19 by mkeerewe         ###   ########.fr       */
+/*   Created: 2025/08/19 16:43:05 by mkeerewe          #+#    #+#             */
+/*   Updated: 2025/08/19 16:43:05 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include "libft/libft.h"
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*ptr;
+	int		i;
+	int		j;
 
-t_list	*ft_lstinit(int argc, char *argv[]);
-void	ft_push(t_list **head_a, t_list **head_b, char stack);
-void	ft_swap(t_list **head_1, t_list **head_2, char stack);
-void	ft_rotate(t_list **head_1, t_list **head_2, char stack);
-void	ft_revrotate(t_list **head_1, t_list **head_2, char stack);
-
-#endif
+	ptr = (char *) malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	if (ptr == (void *) 0)
+		return (ptr);
+	i = 0;
+	j = 0;
+	while (s1[i] != '\0')
+	{
+		ptr[j] = s1[i];
+		i++;
+		j++;
+	}
+	i = 0;
+	while (s2[i] != '\0')
+	{
+		ptr[j] = s2[i];
+		i++;
+		j++;
+	}
+	ptr[j] = s2[i];
+	return (ptr);
+}
