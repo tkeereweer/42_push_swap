@@ -6,15 +6,15 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:42:22 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/08/30 15:44:52 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/09/25 15:24:29 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstdelone(t_list *lst, void (*del)(void *))
+void	ft_lstdelone(t_list *lst)
 {
-	if (lst == (void *) 0 || !del)
+	if (lst == (void *) 0)
 		return ;
-	del(lst);
+	free(lst);
 }

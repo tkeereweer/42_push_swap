@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_utils.c                                  :+:      :+:    :+:   */
+/*   push_swap_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 18:00:50 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/09/24 13:04:06 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/09/25 12:55:46 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_set_index(t_list **head)
 	}
 }
 
-void	ft_push(t_list **head_a, t_list **head_b, char stack)
+void	ft_push(t_list **head_a, t_list **head_b, char stack, t_stacks *stacks)
 {
 	t_list	*tmp;
 	t_list	*node;
@@ -44,6 +44,8 @@ void	ft_push(t_list **head_a, t_list **head_b, char stack)
 		else
 			ft_lstadd_front(head_a, node);
 		*head_b = tmp;
+		stacks->len_a += 1;
+		stacks->len_b -= 1;
 		ft_printf("%s", "pa\n");
 	}
 	else if (stack == 'b')
@@ -58,6 +60,8 @@ void	ft_push(t_list **head_a, t_list **head_b, char stack)
 		else
 			ft_lstadd_front(head_b, node);
 		*head_a = tmp;
+		stacks->len_a -= 1;
+		stacks->len_b += 1;
 		ft_printf("%s", "pb\n");
 	}
 	ft_set_index(head_a);

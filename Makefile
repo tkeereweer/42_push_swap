@@ -1,4 +1,5 @@
-SRCS = push_swap.c \
+SRCS = chunking.c \
+	check_input.c \
 	init_lst.c \
 	push_swap_utils.c
 
