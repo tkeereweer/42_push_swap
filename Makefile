@@ -12,15 +12,15 @@ LIBFT = $(LIBFT_DIR)/libft.a
 NAME = push_swap
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g
 
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) -L$(LIBFT_DIR) -lft $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft -o $(NAME)
 
 $(LIBFT):
-	make bonus -C $(LIBFT_DIR)
+	make -C $(LIBFT_DIR)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@

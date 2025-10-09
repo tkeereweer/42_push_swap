@@ -6,7 +6,11 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 17:49:56 by mkeerewe          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/09/26 15:00:14 by mkeerewe         ###   ########.fr       */
+=======
+/*   Updated: 2025/10/03 11:57:23 by mkeerewe         ###   ########.fr       */
+>>>>>>> d1b731cd3108a79ec696e871bf0ac079d53b9a0c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,11 +131,10 @@ int	main(int argc, char *argv[])
 	check_input(argc, argv);
 	lst_a = ft_lstinit(argc, argv);
 	lst_b = (void *) 0;
-	if (argc - 1 < 250)
-		chunks = (argc - 1) / 18;
+	if (argc - 1 < 200)
+		chunks_to_b(argc, &lst_a, &lst_b, (argc - 1) / 18);
 	else
-		chunks = (argc - 1) / 45;
-	chunks_to_b(argc, &lst_a, &lst_b, chunks);
+		chunks_to_b(argc, &lst_a, &lst_b, (argc - 1) / 35);
 	push_largest_to_a(argc, &lst_a, &lst_b);
 	ft_lstclear(&lst_a);
 	ft_lstclear(&lst_b);

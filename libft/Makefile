@@ -36,43 +36,36 @@ SRCS = ft_atoi.c \
 	ft_putchar.c \
 	ft_puthex.c \
 	ft_putnbr.c \
+	ft_putptr.c \
 	ft_putstr.c \
 	ft_putuint.c \
-	ft_putptr.c
-	
-B_SRCS = ft_lstadd_back.c \
+	ft_lstadd_back.c \
 	ft_lstadd_front.c \
 	ft_lstclear.c \
 	ft_lstdelone.c \
 	ft_lstiter.c \
 	ft_lstlast.c \
+	ft_lstmap.c \
 	ft_lstnew.c \
-	ft_lstsize.c \
-# 	ft_lstmap.c 
-
-INC = libft.h
+	ft_lstsize.c
 
 OBJS = $(SRCS:.c=.o)
-B_OBJS = $(B_SRCS:.c=.o)
 
 NAME = libft.a
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
-
-bonus: $(NAME) $(B_OBJS)
-	ar rcs $(NAME) $(B_OBJS)
 
 $(NAME): $(OBJS)
 	ar rcs $(NAME) $(OBJS)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -I $(INC) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(OBJS) $(B_OBJS)
+	rm -rf $(OBJS)
 
 fclean: clean
 	rm -rf $(NAME)
