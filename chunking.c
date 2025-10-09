@@ -6,7 +6,7 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 17:49:56 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/09/26 11:55:16 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/09/26 15:00:14 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,17 +106,32 @@ void	push_largest_to_a(int argc, t_list **head_a, t_list **head_b)
 	}
 }
 
+// int	ft_sqrt(int n)
+// {
+// 	int	i;
+
+// 	i = 1;
+// 	while (i * i < n)
+// 		i++;
+// 	return (i);
+// }
+
 int	main(int argc, char *argv[])
 {
 	t_list	*lst_a;
 	t_list	*lst_b;
+	int		chunks;
 
 	if (argc < 2)
 		return (0);
 	check_input(argc, argv);
 	lst_a = ft_lstinit(argc, argv);
 	lst_b = (void *) 0;
-	chunks_to_b(argc, &lst_a, &lst_b, 6);
+	if (argc - 1 < 250)
+		chunks = (argc - 1) / 18;
+	else
+		chunks = (argc - 1) / 45;
+	chunks_to_b(argc, &lst_a, &lst_b, chunks);
 	push_largest_to_a(argc, &lst_a, &lst_b);
 	ft_lstclear(&lst_a);
 	ft_lstclear(&lst_b);
