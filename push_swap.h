@@ -6,7 +6,7 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 17:54:51 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/09/26 11:56:31 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/10/03 11:48:56 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,9 @@
 
 typedef struct s_stacks
 {
-    int len_a;
-    int len_b;
-    int cost_a;
-    int cost_b;
-}   t_stacks;
+	int len_a;
+	int len_b;
+}	t_stacks;
 
 void	check_input(int argc, char *argv[]);
 t_list	*ft_lstinit(int argc, char *argv[]);
