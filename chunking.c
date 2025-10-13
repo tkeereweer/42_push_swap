@@ -6,7 +6,7 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 17:49:56 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/10/03 11:57:23 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/10/13 16:14:45 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,22 +57,23 @@ void	chunks_to_b(int argc, t_list **head_a, t_list **head_b, int chunks)
 {
 	int		i;
 	int		j;
-	// int		mean_idx;
+	int		mean_idx;
 
 	i = 0;
+	mean_idx = -1;
 	while (i < chunks)
 	{
-		// mean_idx = get_mean_idx(argc, head_a, i, chunks);
 		j = 0;
 		while (j < (argc - 1) / chunks)
 		{
 			if ((*head_a)->pos < ((argc - 1) / chunks) * (i + 1))
 			{
 				ft_push(head_a, head_b, 'b');
+				mean_idx = get_mean_idx(argc, head_a, i, chunks);
 				j++;
 			}
-			// else if (mean_idx > ((argc - 2) - (i + 1) * j) / 2)
-			// 	ft_revrotate(head_a, (void *) 0, 'a');
+			else if (mean_idx > ((argc - 2) - (i + 1) * j) / 2)
+				ft_revrotate(head_a, (void *) 0, 'a');
 			else
 				ft_rotate(head_a, (void *) 0, 'a');
 		}
@@ -119,7 +120,7 @@ int	main(int argc, char *argv[])
 	if (argc - 1 < 200)
 		chunks_to_b(argc, &lst_a, &lst_b, (argc - 1) / 18);
 	else
-		chunks_to_b(argc, &lst_a, &lst_b, (argc - 1) / 35);
+		chunks_to_b(argc, &lst_a, &lst_b, (argc - 1) / 45);
 	push_largest_to_a(argc, &lst_a, &lst_b);
 	ft_lstclear(&lst_a);
 	ft_lstclear(&lst_b);
