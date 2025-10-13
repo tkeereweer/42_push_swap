@@ -6,7 +6,7 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 17:49:56 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/10/09 16:12:40 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/10/09 16:16:53 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,6 @@ int	main(int argc, char *argv[])
 {
 	t_list	*lst_a;
 	t_list	*lst_b;
-	int		chunks;
 
 	if (argc < 2)
 		return (0);
@@ -130,7 +129,7 @@ int	main(int argc, char *argv[])
 	if (argc - 1 < 200)
 		chunks_to_b(argc, &lst_a, &lst_b, (argc - 1) / 18);
 	else
-		chunks_to_b(argc, &lst_a, &lst_b, (argc - 1) / 35);
+		chunks_to_b(argc, &lst_a, &lst_b, (argc - 1) / 45);
 	push_largest_to_a(argc, &lst_a, &lst_b);
 	ft_lstclear(&lst_a);
 	ft_lstclear(&lst_b);
