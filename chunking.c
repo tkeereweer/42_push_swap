@@ -6,84 +6,71 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 17:49:56 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/10/13 16:20:56 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/10/15 10:52:41 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	ft_mean(int *arr, int len)
+int	ft_min(int a, int b)
 {
-	int	i;
-	int	sum;
-
-	i = 0;
-	sum = 0;
-	while (i < len)
-	{
-		sum += arr[i];
-		i++;
-	}
-	return (sum / len);
+	if (a <= b)
+		return (a);
+	return (b);
 }
 
-int	get_mean_idx(int argc, t_list **head_a, int i, int chunks)
+t_list	*ft_node_to_insert(int argc, t_list **head_a, int chunks, t_stacks *stacks, int i)
 {
-	t_list	*node;
-	int		*arr;
-	int		j;
-	int		ret;
+	t_list	*curr;
+	t_cost	cheapest_cost;
+	t_cost	curr_cost;
 
-	node = *head_a;
-	arr = (int *) malloc(((argc - 1) / chunks) * sizeof(int));
-	if (arr == (void *) 0)
-		return (-1);
-	j = 0;
-	while (j < ((argc - 1) / chunks))
+	curr = *head_a;
+	cheapest_cost.cost = -1;
+	while (curr != (void *) 0)
 	{
-		if (node->pos < ((argc - 1) / chunks) * (i + 1))
+		if (curr->pos < ((argc - 1) / chunks) * (i + 1))
+			curr_cost.cost = ft_min(curr->index, stacks->len_a - curr->index);
+		if (cheapest_cost.cost == -1 || curr_cost.cost < cheapest_cost.cost)
 		{
-			arr[j] = node->index;
-			j++;
+			cheapest_cost.node = curr;
+			cheapest_cost.cost = curr_cost.cost;
 		}
-		node = node->next;
+		curr = curr->next;
 	}
-	ret = ft_mean(arr, j);
-	free(arr);
-	return (ret);
+	return (cheapest_cost.node);
 }
 
-void	chunks_to_b(int argc, t_list **head_a, t_list **head_b, int chunks)
+void	chunks_to_b(int argc, t_list **head_a, t_list **head_b, int chunks, t_stacks *stacks)
 {
 	int		i;
 	int		j;
-	int		mean_idx;
+	t_list	*node_to_push;
 
 	i = 0;
-	mean_idx = -1;
 	while (i < chunks)
 	{
 		j = 0;
 		while (j < (argc - 1) / chunks)
 		{
-			if ((*head_a)->pos < ((argc - 1) / chunks) * (i + 1))
+			node_to_push = ft_node_to_insert(argc, head_a, chunks, stacks, i);
+			while (*head_a != node_to_push)
 			{
-				ft_push(head_a, head_b, 'b');
-				mean_idx = get_mean_idx(argc, head_a, i, chunks);
-				j++;
+				if (node_to_push->index < stacks->len_a / 2)
+					ft_rotate(head_a, (void *) 0, 'a');
+				else
+					ft_revrotate(head_a, (void *) 0, 'a');
 			}
-			else if (mean_idx > ((argc - 2) - (i + 1) * j) / 2)
-				ft_revrotate(head_a, (void *) 0, 'a');
-			else
-				ft_rotate(head_a, (void *) 0, 'a');
+			ft_push(head_a, head_b, 'b', stacks);
+			j++;
 		}
 		i++;
 	}
 	while (*head_a)
-		ft_push(head_a, head_b, 'b');
+		ft_push(head_a, head_b, 'b', stacks);
 }
 
-void	push_largest_to_a(int argc, t_list **head_a, t_list **head_b)
+void	push_largest_to_a(int argc, t_list **head_a, t_list **head_b, t_stacks *stacks)
 {
 	int		i;
 	t_list	*node;
@@ -102,36 +89,29 @@ void	push_largest_to_a(int argc, t_list **head_a, t_list **head_b)
 		else
 			while (node->index != 0)
 				ft_rotate(head_b, (void *) 0, 'b');
-		ft_push(head_a, head_b, 'a');
+		ft_push(head_a, head_b, 'a', stacks);
 		i++;
 	}
 }
 
-// int	ft_sqrt(int n)
-// {
-// 	int	i;
-
-// 	i = 1;
-// 	while (i * i < n)
-// 		i++;
-// 	return (i);
-// }
-
 int	main(int argc, char *argv[])
 {
-	t_list	*lst_a;
-	t_list	*lst_b;
+	t_list		*lst_a;
+	t_list		*lst_b;
+	t_stacks	stacks;
 
 	if (argc < 2)
 		return (0);
 	check_input(argc, argv);
 	lst_a = ft_lstinit(argc, argv);
 	lst_b = (void *) 0;
+	stacks.len_a = argc - 1;
+	stacks.len_b = 0;
 	if (argc - 1 < 200)
-		chunks_to_b(argc, &lst_a, &lst_b, (argc - 1) / 18);
+		chunks_to_b(argc, &lst_a, &lst_b, stacks.len_a / 18, &stacks);
 	else
-		chunks_to_b(argc, &lst_a, &lst_b, (argc - 1) / 45);
-	push_largest_to_a(argc, &lst_a, &lst_b);
+		chunks_to_b(argc, &lst_a, &lst_b, stacks.len_a / 45, &stacks);
+	push_largest_to_a(argc, &lst_a, &lst_b, &stacks);
 	ft_lstclear(&lst_a);
 	ft_lstclear(&lst_b);
 	return (0);

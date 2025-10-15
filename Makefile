@@ -1,7 +1,7 @@
 SRCS = chunking.c \
 	check_input.c \
 	init_lst.c \
-	push_swap_utils.c
+	push_swap_utils2.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -26,9 +26,11 @@ $(LIBFT):
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
+	make clean -C $(LIBFT_DIR)
 	rm -rf $(OBJS) $(B_OBJS)
 
 fclean: clean
+	make fclean -C $(LIBFT_DIR)
 	rm -rf $(NAME)
 
 re: fclean all

@@ -6,7 +6,7 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 12:39:39 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/10/09 16:13:20 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/10/15 10:33:29 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,76 +47,100 @@ t_list	*find_closest(t_list **head_b, t_list *node)
 	return (closest);
 }
 
-int	compute_cost(t_list **head_b, t_list *node, t_stacks *stacks)
+t_cost	compute_cost(t_list **head_b, t_list *node, t_stacks *stacks)
 {
-	t_list	*curr;
 	t_list	*closest;
 	int		cost_a;
 	int		cost_b;
+	t_cost	cost;
 
+	cost.cost = 0;
+	cost.node = node;
 	cost_a = ft_min(node->index, stacks->len_a - node->index);
-	curr = *head_b;
-	closest = find_closest(head_b, node);
-	if (closest == (void *) 0)
-		cost_b = 0;
+	cost.cost += cost_a;
+	if (cost_a < node->index)
+		cost.dir = 'r';
 	else
+		cost.dir = 'n';
+	closest = find_closest(head_b, node);
+	if (closest != (void *) 0)
+	{
 		cost_b = ft_min(closest->index, stacks->len_b - closest->index);
-	return (cost_a + cost_b);
+		cost.cost += cost_b;
+		if (cost_b < closest->index && cost.dir != 'r')
+			cost.dir = 'm';
+		else if (cost_b >= closest->index && cost.dir != 'n')
+			cost.dir = 'm';
+	}
+	return (cost);
 }
 
-t_list	*ft_node_to_insert(t_list **head_a, t_list **head_b, t_stacks *stacks)
+t_cost	ft_node_to_insert(t_list **head_a, t_list **head_b, t_stacks *stacks)
 {
 	t_list	*curr;
-	t_list	*cheapest_node;
-	int		cheapest;
-	int		cost;
+	t_cost	cheapest_cost;
+	t_cost	curr_cost;
 
 	curr = *head_a;
-	cheapest = -1;
+	cheapest_cost.cost = -1;
 	while (curr != (void *) 0)
 	{
-		cost = compute_cost(head_b, curr, stacks);
-		if (cheapest == -1 || cost < cheapest)
+		curr_cost = compute_cost(head_b, curr, stacks);
+		if (cheapest_cost.cost == -1 || curr_cost.cost < cheapest_cost.cost)
 		{
-			cheapest_node = curr;
-			cheapest = cost;
+			cheapest_cost.node = curr;
+			cheapest_cost.cost = curr_cost.cost;
 		}
 		curr = curr->next;
- 	}
-	return (cheapest_node);
-}
-
-void	get_closest_to_top(t_list **head_b, t_list *node_to_insert, t_stacks *stacks)
-{
-	t_list	*curr;
-	t_list	*closest;
-
-	curr = *head_b;
-	closest = find_closest(head_b, node_to_insert);
-	while (*head_b != closest)
-	{
-		if (node_to_insert->index < stacks->len_b / 2)
-			ft_rotate(head_b, (void *) 0, 'b');
-		else
-			ft_revrotate(head_b, (void *) 0, 'b');
 	}
+	return (cheapest_cost);
 }
+
+// void	get_closest_to_top(t_list **head_b, t_list *node_to_insert,
+// 			t_stacks *stacks)
+// {
+// 	t_list	*closest;
+
+// 	closest = find_closest(head_b, node_to_insert);
+// 	while (*head_b != closest)
+// 	{
+// 		if (closest->index < stacks->len_b / 2)
+// 			ft_rotate(head_b, (void *) 0, 'b');
+// 		else
+// 			ft_revrotate(head_b, (void *) 0, 'b');
+// 	}
+// }
 
 void	cost_based_insertion(t_list **head_a, t_list **head_b, t_stacks *stacks)
 {
-	t_list *node_to_insert;
+	t_list	*closest;
+	t_cost	cost;
 
 	while (*head_a != (void *) 0)
 	{
-		node_to_insert = ft_node_to_insert(head_a, head_b, stacks);
-		while (*head_a != node_to_insert)
+		cost = ft_node_to_insert(head_a, head_b, stacks);
+		closest = find_closest(head_b, cost.node);
+		while (cost.dir != 'm' && *head_a != cost.node && *head_b != closest)
 		{
-			if (node_to_insert->index < stacks->len_a / 2)
+			if (cost.dir == 'n')
+				ft_rotate(head_a, head_b, 'r');
+			else
+				ft_revrotate(head_a, head_b, 'r');
+		}
+		while (*head_a != cost.node)
+		{
+			if (cost.node->index < stacks->len_a / 2)
 				ft_rotate(head_a, (void *) 0, 'a');
 			else
 				ft_revrotate(head_a, (void *) 0, 'a');
 		}
-		get_closest_to_top(head_b, node_to_insert, stacks);
+		while (*head_b != closest)
+		{
+			if (closest->index < stacks->len_b / 2)
+				ft_rotate(head_b, (void *) 0, 'b');
+			else
+				ft_revrotate(head_b, (void *) 0, 'b');
+		}
 		ft_push(head_a, head_b, 'b', stacks);
 	}
 }

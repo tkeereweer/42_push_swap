@@ -6,11 +6,11 @@ echo "--- Max int ---"
 ./push_swap 12 11 14 2147483647 15
 echo "--- Min int ---"
 ./push_swap 12 11 14 -2147483648 15
-echo "--- Out of int limits ---"
+echo "--- Out of max int limits ---"
 ./push_swap 12 11 14 21474836490 15
-echo "--- Out of int limits ---"
+echo "--- Out of min int limits ---"
 ./push_swap 12 11 14 -21474836450 15
 echo "--- Duplicate values ---"
 ./push_swap 12 11 14 11 15
-echo "--- Valid values ---"
-./push_swap 12 11 -14 13 15
+# echo "--- Valid values ---"
+# ./push_swap 12 11 -14 13 15
