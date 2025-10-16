@@ -6,7 +6,7 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 12:39:39 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/10/15 10:33:29 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/10/16 17:19:12 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 int	ft_min(int a, int b)
 {
 	if (a <= b)
+		return (a);
+	return (b);
+}
+
+int	ft_max(int a, int b)
+{
+	if (a >= b)
 		return (a);
 	return (b);
 }
@@ -72,6 +79,8 @@ t_cost	compute_cost(t_list **head_b, t_list *node, t_stacks *stacks)
 		else if (cost_b >= closest->index && cost.dir != 'n')
 			cost.dir = 'm';
 	}
+	if (cost.dir == 'r' || cost.dir == 'n')
+		cost.cost = ft_max(cost_a, cost_b);
 	return (cost);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 17:54:51 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/10/15 10:31:36 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/10/16 17:54:48 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ typedef struct s_stacks
 {
 	int	len_a;
 	int	len_b;
+	int	chunks;
+	int	upper;
+	int	lower;
 }	t_stacks;
 
 typedef struct s_cost

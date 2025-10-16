@@ -6,11 +6,20 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 17:49:56 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/10/15 10:52:41 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/10/16 18:21:19 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+void	get_chunk_lim(t_stacks *stacks, int i, int argc)
+{
+	int	chunk_size = (argc - 1) / stacks->chunks;
+	stacks->lower = chunk_size * i;
+	stacks->upper = chunk_size * (i + 1) - 1;
+	if (i == stacks->chunks - 1)
+		stacks->upper = argc - 2;
+}
 
 int	ft_min(int a, int b)
 {
@@ -19,44 +28,48 @@ int	ft_min(int a, int b)
 	return (b);
 }
 
-t_list	*ft_node_to_insert(int argc, t_list **head_a, int chunks, t_stacks *stacks, int i)
+t_list	*ft_node_to_insert(t_list **head_a, t_stacks *stacks)
 {
 	t_list	*curr;
-	t_cost	cheapest_cost;
-	t_cost	curr_cost;
+	t_list	*cheapest_node;
+	int		cost;
 
 	curr = *head_a;
-	cheapest_cost.cost = -1;
+	cost = -1;
 	while (curr != (void *) 0)
 	{
-		if (curr->pos < ((argc - 1) / chunks) * (i + 1))
-			curr_cost.cost = ft_min(curr->index, stacks->len_a - curr->index);
-		if (cheapest_cost.cost == -1 || curr_cost.cost < cheapest_cost.cost)
+		if (curr->pos >= stacks->lower && curr->pos <= stacks->upper)
 		{
-			cheapest_cost.node = curr;
-			cheapest_cost.cost = curr_cost.cost;
+			if (cost == -1 || ft_min(curr->index, stacks->len_a - curr->index) < cost)
+			{
+				cost = ft_min(curr->index, stacks->len_a - curr->index);
+				cheapest_node = curr;
+			}
 		}
 		curr = curr->next;
 	}
-	return (cheapest_cost.node);
+	return (cheapest_node);
 }
 
-void	chunks_to_b(int argc, t_list **head_a, t_list **head_b, int chunks, t_stacks *stacks)
+void	chunks_to_b(t_list **head_a, t_list **head_b, t_stacks *stacks, int argc)
 {
 	int		i;
 	int		j;
-	t_list	*node_to_push;
+	t_list	*node_to_insert;
 
 	i = 0;
-	while (i < chunks)
+	while (i < stacks->chunks)
 	{
+		get_chunk_lim(stacks, i, argc);
 		j = 0;
-		while (j < (argc - 1) / chunks)
+		while (j < stacks->upper - stacks->lower + 1)
 		{
-			node_to_push = ft_node_to_insert(argc, head_a, chunks, stacks, i);
-			while (*head_a != node_to_push)
+			node_to_insert = ft_node_to_insert(head_a, stacks);
+			if (!node_to_insert)
+				break;
+			while (*head_a != node_to_insert)
 			{
-				if (node_to_push->index < stacks->len_a / 2)
+				if (node_to_insert->index < stacks->len_a / 2)
 					ft_rotate(head_a, (void *) 0, 'a');
 				else
 					ft_revrotate(head_a, (void *) 0, 'a');
@@ -66,7 +79,7 @@ void	chunks_to_b(int argc, t_list **head_a, t_list **head_b, int chunks, t_stack
 		}
 		i++;
 	}
-	while (*head_a)
+	while (*head_a != (void *) 0)
 		ft_push(head_a, head_b, 'b', stacks);
 }
 
@@ -108,9 +121,10 @@ int	main(int argc, char *argv[])
 	stacks.len_a = argc - 1;
 	stacks.len_b = 0;
 	if (argc - 1 < 200)
-		chunks_to_b(argc, &lst_a, &lst_b, stacks.len_a / 18, &stacks);
+		stacks.chunks = stacks.len_a / 18;
 	else
-		chunks_to_b(argc, &lst_a, &lst_b, stacks.len_a / 45, &stacks);
+		stacks.chunks = stacks.len_a / 45;
+	chunks_to_b(&lst_a, &lst_b, &stacks, argc);
 	push_largest_to_a(argc, &lst_a, &lst_b, &stacks);
 	ft_lstclear(&lst_a);
 	ft_lstclear(&lst_b);
