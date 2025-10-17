@@ -6,7 +6,7 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 10:27:42 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/10/17 10:40:27 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/10/17 11:58:13 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,21 @@ void	ft_set_index(t_list **head)
 		i++;
 		node = node->next;
 	}
+}
+
+int	is_sorted(t_list **head_a)
+{
+	t_list	*curr;
+	int		prev;
+
+	curr = *head_a;
+	prev = -1;
+	while (curr != (void *) 0)
+	{
+		if (prev != -1 && prev > curr->pos)
+			return (0);
+		prev = curr->pos;
+		curr = curr->next;
+	}
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 17:54:51 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/10/17 10:40:25 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/10/17 14:00:43 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ void	ret_error(void);
 void	check_input(int argc, char *argv[]);
 t_list	*ft_lstinit(int argc, char *argv[]);
 int		ft_min(int a, int b);
+int		is_sorted(t_list **head_a);
+void	sort_on_b(int argc, t_list **head_a, t_list **head_b);
+void	push_to_a(t_list **head_a, t_list **head_b);
 void	ft_push(t_list **head_a, t_list **head_b, char stack);
 // void	ft_push(t_list **head_a, t_list **head_b, char stack, t_stacks *stacks);
 void	ft_swap(t_list **head_1, t_list **head_2, char stack);

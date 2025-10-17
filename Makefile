@@ -2,6 +2,7 @@ SRCS = naive_chunking.c \
 	check_input.c \
 	init_lst.c \
 	instructions.c \
+	sort_on_b.c \
 	utils.c
 
 OBJS = $(SRCS:.c=.o)
