@@ -6,7 +6,7 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 12:33:25 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/09/25 15:23:32 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/10/17 10:18:00 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ static void	get_pos(int argc, t_list **head)
 		min_node = (void *) 0;
 		while (node)
 		{
-			if (node->pos == -1 && (!min_node || node->content < min_node->content))
+			if (node->pos == -1
+				&& (!min_node || node->content < min_node->content))
 				min_node = node;
 			node = node->next;
 		}

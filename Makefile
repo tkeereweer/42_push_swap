@@ -1,7 +1,8 @@
-SRCS = chunking.c \
+SRCS = naive_chunking.c \
 	check_input.c \
 	init_lst.c \
-	push_swap_utils2.c
+	instructions.c \
+	utils.c
 
 OBJS = $(SRCS:.c=.o)
 

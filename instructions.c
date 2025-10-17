@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_utils.c                                  :+:      :+:    :+:   */
+/*   instructions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 18:00:50 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/09/24 13:04:06 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/10/17 10:41:03 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ft_set_index(t_list **head)
+static void	ft_push_b(t_list **head_a, t_list **head_b)
 {
+	t_list	*tmp;
 	t_list	*node;
-	int		i;
 
-	node = *head;
-	i = 0;
-	while (node != (void *) 0)
+	node = *head_a;
+	tmp = node->next;
+	if (*head_b == (void *) 0)
 	{
-		node->index = i;
-		i++;
-		node = node->next;
+		*head_b = node;
+		node->next = (void *) 0;
 	}
+	else
+		ft_lstadd_front(head_b, node);
+	*head_a = tmp;
+	ft_printf("%s", "pb\n");
 }
 
 void	ft_push(t_list **head_a, t_list **head_b, char stack)
@@ -47,19 +50,7 @@ void	ft_push(t_list **head_a, t_list **head_b, char stack)
 		ft_printf("%s", "pa\n");
 	}
 	else if (stack == 'b')
-	{
-		node = *head_a;
-		tmp = node->next;
-		if (*head_b == (void *) 0)
-		{
-			*head_b = node;
-			node->next = (void *) 0;
-		}
-		else
-			ft_lstadd_front(head_b, node);
-		*head_a = tmp;
-		ft_printf("%s", "pb\n");
-	}
+		ft_push_b(head_a, head_b);
 	ft_set_index(head_a);
 	ft_set_index(head_b);
 }

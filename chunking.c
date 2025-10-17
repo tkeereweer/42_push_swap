@@ -6,7 +6,7 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 17:49:56 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/10/16 18:21:19 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/10/17 09:54:38 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,22 +51,34 @@ t_list	*ft_node_to_insert(t_list **head_a, t_stacks *stacks)
 	return (cheapest_node);
 }
 
+int	node_in_chunk(t_list **head_a, t_stacks *stacks)
+{
+	t_list *curr;
+
+	curr = *head_a;
+	while (curr != (void *) 0)
+	{
+		if (curr->pos >= stacks->lower && curr->pos <= stacks->upper)
+			return (1);
+		curr = curr->next;
+	}
+	return (0);
+}
+
 void	chunks_to_b(t_list **head_a, t_list **head_b, t_stacks *stacks, int argc)
 {
 	int		i;
-	int		j;
 	t_list	*node_to_insert;
 
 	i = 0;
 	while (i < stacks->chunks)
 	{
 		get_chunk_lim(stacks, i, argc);
-		j = 0;
-		while (j < stacks->upper - stacks->lower + 1)
+		while (node_in_chunk(head_a, stacks) == 1)
 		{
 			node_to_insert = ft_node_to_insert(head_a, stacks);
 			if (!node_to_insert)
-				break;
+				break ;
 			while (*head_a != node_to_insert)
 			{
 				if (node_to_insert->index < stacks->len_a / 2)
@@ -74,8 +86,13 @@ void	chunks_to_b(t_list **head_a, t_list **head_b, t_stacks *stacks, int argc)
 				else
 					ft_revrotate(head_a, (void *) 0, 'a');
 			}
-			ft_push(head_a, head_b, 'b', stacks);
-			j++;
+			if (node_to_insert->pos < stacks->min_b)
+			{
+				ft_push(head_a, head_b, 'b', stacks);
+				ft_rotate(head_b, (void *) 0, 'b');
+			}
+			else
+				ft_push(head_a, head_b, 'b', stacks);
 		}
 		i++;
 	}
@@ -120,7 +137,9 @@ int	main(int argc, char *argv[])
 	lst_b = (void *) 0;
 	stacks.len_a = argc - 1;
 	stacks.len_b = 0;
-	if (argc - 1 < 200)
+	if (argc - 1 < 100)
+		stacks.chunks = stacks.len_a / 3;
+	else if (argc - 1 < 250)
 		stacks.chunks = stacks.len_a / 18;
 	else
 		stacks.chunks = stacks.len_a / 45;

@@ -6,23 +6,20 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 11:34:20 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/09/26 12:40:39 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/10/17 10:40:28 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	ft_isnum(int c)
+void	check_int_lim(char *argv[], int i)
 {
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
-}
-
-void	ret_error(void)
-{
-	ft_putstr_fd("Error\n", 2);
-	exit(1);
+	if (ft_strlen(argv[i]) >= 10
+		&& ft_strncmp(argv[i], "2147483647", 11) > 0)
+		ret_error();
+	else if (ft_strlen(argv[i]) >= 11
+		&& ft_strncmp(argv[i], "-2147483648", 12) < 0)
+		ret_error();
 }
 
 void	check_nums(int argc, char *argv[])
@@ -45,10 +42,7 @@ void	check_nums(int argc, char *argv[])
 				ret_error();
 			j++;
 		}
-		if (ft_strlen(argv[i]) >= 10 && ft_strncmp(argv[i], "2147483647", 11) > 0)
-			ret_error();
-		else if (ft_strlen(argv[i]) >= 11 && ft_strncmp(argv[i], "-2147483648", 12) < 0)
-			ret_error();
+		check_int_lim(argv, i);
 		i++;
 	}
 }

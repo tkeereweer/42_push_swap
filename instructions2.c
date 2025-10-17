@@ -1,31 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_utils2.c                                 :+:      :+:    :+:   */
+/*   instructions2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 18:00:50 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/09/25 12:55:46 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/10/17 10:32:03 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-void	ft_set_index(t_list **head)
-{
-	t_list	*node;
-	int		i;
-
-	node = *head;
-	i = 0;
-	while (node != (void *) 0)
-	{
-		node->index = i;
-		i++;
-		node = node->next;
-	}
-}
 
 void	ft_push(t_list **head_a, t_list **head_b, char stack, t_stacks *stacks)
 {
@@ -62,6 +47,10 @@ void	ft_push(t_list **head_a, t_list **head_b, char stack, t_stacks *stacks)
 		*head_a = tmp;
 		stacks->len_a -= 1;
 		stacks->len_b += 1;
+		if (stacks->len_b == 0)
+			stacks->min_b = (*head_b)->pos;
+		else
+			stacks->min_b = ft_min(stacks->min_b, (*head_b)->pos);
 		ft_printf("%s", "pb\n");
 	}
 	ft_set_index(head_a);
