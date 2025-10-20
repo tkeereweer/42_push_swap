@@ -6,7 +6,7 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 11:34:20 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/10/17 10:40:28 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/10/20 08:32:19 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 void	check_int_lim(char *argv[], int i)
 {
+	if (ft_strlen(argv[i]) > 11)
+		ret_error();
 	if (ft_strlen(argv[i]) >= 10
 		&& ft_strncmp(argv[i], "2147483647", 11) > 0)
 		ret_error();
 	else if (ft_strlen(argv[i]) >= 11
-		&& ft_strncmp(argv[i], "-2147483648", 12) < 0)
+		&& ft_strncmp(argv[i], "-2147483648", 12) > 0)
 		ret_error();
 }
 
