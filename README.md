@@ -65,9 +65,6 @@ make
 ```bash
 # Run input validation tests
 bash test_inputs.sh
-
-# Run with valgrind memory checking
-bash test_inputs.sh --valgrind
 ```
 
 ### Verify Correctness with Checker

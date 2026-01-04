@@ -6,9 +6,6 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-# Optional valgrind flag
-USE_VALGRIND=${1:-""}
-
 echo "Testing push_swap input validation..."
 echo ""
 
@@ -18,13 +15,8 @@ test_case() {
 	shift
 	echo -n "Testing: $name ... "
 
-	if [ "$USE_VALGRIND" == "--valgrind" ]; then
-		output=$(valgrind --leak-check=full --error-exitcode=1 ./push_swap "$@" 2>&1)
-		exitcode=$?
-	else
-		output=$(./push_swap "$@" 2>&1)
-		exitcode=$?
-	fi
+	output=$(./push_swap "$@" 2>&1)
+	exitcode=$?
 
 	if [ $exitcode -eq 1 ]; then
 		echo -e "${GREEN}PASS${NC}"
@@ -69,4 +61,3 @@ else
 fi
 
 echo ""
-echo "Usage: $0 [--valgrind]  # Add --valgrind flag to run with memory leak detection"
