@@ -1,3 +1,9 @@
+# Binaries
 push_swap
-checker_Mac
-checker_linux
+
+# Build artifacts
+*.o
+*.a
+
+# macOS
+.DS_Store

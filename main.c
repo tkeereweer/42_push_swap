@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   naive_chunking.c                                   :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,27 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   chunking.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/13 17:49:56 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/10/13 16:20:56 by mkeerewe         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "push_swap.h"
+
+# define THRESHOLD_SMALL 40
+# define THRESHOLD_MEDIUM 200
+# define CHUNK_DIVISOR_MEDIUM 18
+# define CHUNK_DIVISOR_LARGE 45
 
 void	sort_three(t_list **head_a, int argc)
 {
-	while (is_sorted(head_a) == 0)
+	while (ft_is_sorted(head_a) == 0)
 	{
 		if ((*head_a)->pos != argc - 2 && (*head_a)->next->pos < (*head_a)->pos)
 			ft_swap(head_a, (void *) 0, 'a');
-		if (is_sorted(head_a) == 0)
+		if (ft_is_sorted(head_a) == 0)
 			ft_rotate(head_a, (void *) 0, 'a');
 	}
 }
@@ -98,7 +91,7 @@ int	run_prog(t_list **head_a, t_list **head_b, int argc)
 		ft_lstclear(head_a);
 		return (0);
 	}
-	else if (argc - 1 < 40)
+	else if (argc - 1 < THRESHOLD_SMALL)
 	{
 		sort_on_b(argc, head_a, head_b);
 		push_to_a(head_a, head_b);
@@ -106,10 +99,10 @@ int	run_prog(t_list **head_a, t_list **head_b, int argc)
 		ft_lstclear(head_b);
 		return (0);
 	}
-	else if (argc - 1 < 200)
-		chunks_to_b(argc, head_a, head_b, (argc - 1) / 18);
+	else if (argc - 1 < THRESHOLD_MEDIUM)
+		chunks_to_b(argc, head_a, head_b, (argc - 1) / CHUNK_DIVISOR_MEDIUM);
 	else
-		chunks_to_b(argc, head_a, head_b, (argc - 1) / 45);
+		chunks_to_b(argc, head_a, head_b, (argc - 1) / CHUNK_DIVISOR_LARGE);
 	return (1);
 }
 
@@ -123,7 +116,7 @@ int	main(int argc, char *argv[])
 	check_input(argc, argv);
 	lst_a = ft_lstinit(argc, argv);
 	lst_b = (void *) 0;
-	if (is_sorted(&lst_a) == 1)
+	if (ft_is_sorted(&lst_a) == 1)
 	{
 		ft_lstclear(&lst_a);
 		return (0);

@@ -34,7 +34,7 @@ void	sort_on_b(int argc, t_list **head_a, t_list **head_b)
 		ft_push(head_a, head_b, 'b');
 		i++;
 	}
-	if (is_sorted(head_a) == 0)
+	if (ft_is_sorted(head_a) == 0)
 		ft_swap(head_a, (void *) 0, 'a');
 }
 

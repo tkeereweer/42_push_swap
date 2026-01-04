@@ -25,6 +25,13 @@ void	ret_error(void)
 	exit(1);
 }
 
+int	ft_min(int a, int b)
+{
+	if (a <= b)
+		return (a);
+	return (b);
+}
+
 void	ft_set_index(t_list **head)
 {
 	t_list	*node;
@@ -40,7 +47,7 @@ void	ft_set_index(t_list **head)
 	}
 }
 
-int	is_sorted(t_list **head_a)
+int	ft_is_sorted(t_list **head_a)
 {
 	t_list	*curr;
 	int		prev;

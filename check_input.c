@@ -14,14 +14,27 @@
 
 void	check_int_lim(char *argv[], int i)
 {
-	if (ft_strlen(argv[i]) > 11)
-		ret_error();
-	if (ft_strlen(argv[i]) >= 10
-		&& ft_strncmp(argv[i], "2147483647", 11) > 0)
-		ret_error();
-	else if (ft_strlen(argv[i]) >= 11
-		&& ft_strncmp(argv[i], "-2147483648", 12) > 0)
-		ret_error();
+	long	num;
+	int		sign;
+	int		j;
+
+	sign = 1;
+	j = 0;
+	if (argv[i][j] == '-')
+	{
+		sign = -1;
+		j++;
+	}
+	num = 0;
+	while (argv[i][j])
+	{
+		num = num * 10 + (argv[i][j] - '0');
+		if (sign == 1 && num > 2147483647)
+			ret_error();
+		if (sign == -1 && num > 2147483648)
+			ret_error();
+		j++;
+	}
 }
 
 void	check_nums(int argc, char *argv[])

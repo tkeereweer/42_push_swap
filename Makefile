@@ -1,4 +1,4 @@
-SRCS = naive_chunking.c \
+SRCS = main.c \
 	check_input.c \
 	init_lst.c \
 	instructions.c \
@@ -29,7 +29,7 @@ $(LIBFT):
 
 clean:
 	make clean -C $(LIBFT_DIR)
-	rm -rf $(OBJS) $(B_OBJS)
+	rm -rf $(OBJS)
 
 fclean: clean
 	make fclean -C $(LIBFT_DIR)

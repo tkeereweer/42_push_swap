@@ -39,13 +39,22 @@ static void	get_pos(int argc, t_list **head)
 t_list	*ft_lstinit(int argc, char *argv[])
 {
 	t_list	*lst;
+	t_list	*new_node;
 	int		i;
 
 	lst = ft_lstnew(ft_atoi(argv[1]), 0);
+	if (!lst)
+		ret_error();
 	i = 2;
 	while (i < argc)
 	{
-		ft_lstadd_back(&lst, ft_lstnew(ft_atoi(argv[i]), i - 1));
+		new_node = ft_lstnew(ft_atoi(argv[i]), i - 1);
+		if (!new_node)
+		{
+			ft_lstclear(&lst);
+			ret_error();
+		}
+		ft_lstadd_back(&lst, new_node);
 		i++;
 	}
 	get_pos(argc, &lst);
