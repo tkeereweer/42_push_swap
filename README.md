@@ -74,10 +74,6 @@ The `checker_MAC` binary validates that push_swap generates correct sorting inst
 # Test a specific case
 ./push_swap 3 2 1 0 | ./checker_MAC 3 2 1 0
 # Output: "OK" (correct) or "KO" (incorrect) or "Error" (invalid input)
-
-# Test random numbers
-ARG=$(seq 1 100 | sort -R | tr '\n' ' ')
-./push_swap $ARG | ./checker_MAC $ARG
 ```
 
 ### Performance Benchmarks
